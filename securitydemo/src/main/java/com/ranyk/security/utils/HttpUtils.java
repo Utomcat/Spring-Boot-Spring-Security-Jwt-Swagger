@@ -10,27 +10,33 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * ClassName:HttpUtils
- * Description:
- *
- * @author ranyi
- * @date 2020-10-13 0:45
- * Version: V1.0
+ * HTTP工具类
+ * @author Louis
+ * @date Oct 29, 2018
  */
 public class HttpUtils {
 
-    public static HttpServletRequest getHttpServletRequest() {
-        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-    }
-
-    public static void write(HttpServletResponse response, Object data) throws IOException {
-        response.setContentType("application/json; charset=utf-8");
+	/**
+	 * 获取HttpServletRequest对象
+	 * @return
+	 */
+	public static HttpServletRequest getHttpServletRequest() {
+		return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+	}
+	
+	/**
+	 * 输出信息到浏览器
+	 * @param response
+	 * @param message
+	 * @throws IOException
+	 */
+	public static void write(HttpServletResponse response, Object data) throws IOException {
+		response.setContentType("application/json; charset=utf-8");
         HttpResult result = HttpResult.ok(data);
         String json = JSONObject.toJSONString(result);
         response.getWriter().print(json);
         response.getWriter().flush();
         response.getWriter().close();
-    }
-
-
+	}
+	
 }

@@ -1,34 +1,26 @@
 package com.ranyk.security.vo;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
-import org.springframework.stereotype.Component;
-
 /**
- * ClassName:LoginBean
- * Description:
- *
- * @author ranyi
- * @date 2020-10-13 0:23
- * Version: V1.0
+ * 登录接口封装对象
+ * @author Louis
+ * @date Nov 28, 2018
  */
-@Data
-@ToString
-@Component
-@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
-@ApiModel(value = "登录对象类",description = "对登录的对象进行封装")
 public class LoginBean {
 
-    @ApiModelProperty(name = "account",value = "登录用户名",dataType = "java.lang.String")
-    private String userName;
-
-    @ApiModelProperty(name = "password",value = "登录密码",dataType = "java.lang.String")
-    private String password;
-
-    @ApiModelProperty(name = "captcha",value = "登录验证码",dataType = "java.lang.String")
-    private String captcha;
-
+	private String username;
+	private String password;
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 }

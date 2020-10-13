@@ -1,14 +1,15 @@
 package com.ranyk.security.vo;
 
 /**
- * ClassName:HttpStatus
- * Description:Http请求状态码的封装对象类
+ * Constants enumerating the HTTP status codes.
+ * All status codes defined in RFC1945 (HTTP/1.0), RFC2616 (HTTP/1.1), and
+ * RFC2518 (WebDAV) are listed.
  *
- * @author ranyi
- * @date 2019-12-17 18:28
- * Version: V1.0
+ * @see StatusLine
+ *
+ * @since 4.0
  */
-public class HttpStatus {
+public interface HttpStatus {
 
     // --- 1xx Informational ---
 

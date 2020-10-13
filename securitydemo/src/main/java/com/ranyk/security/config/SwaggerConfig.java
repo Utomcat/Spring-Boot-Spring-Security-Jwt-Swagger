@@ -8,7 +8,6 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
 import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -18,12 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * ClassName:SwaggerConfig
- * Description:Swagger 配置类
- *
- * @author ranyi
- * @date 2020-10-10 12:50
- * Version: V1.0
+ * Swagger配置
+ * @author Louis
+ * @date Nov 28, 2018
  */
 @Configuration
 @EnableSwagger2
@@ -31,26 +27,18 @@ public class SwaggerConfig {
 
     @Bean
     public Docket createRestApi(){
-        ParameterBuilder parameterBuilder = new ParameterBuilder();
-        List<Parameter> parameters = new ArrayList<Parameter>();
-        parameterBuilder.name("").description("").modelRef(new ModelRef("")).parameterType("").required(false).build();
-        parameters.add(parameterBuilder.build());
-        return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any()).build().globalOperationParameters(parameters);
+    	// 添加请求参数，我们这里把token作为请求头部参数传入后端
+		ParameterBuilder parameterBuilder = new ParameterBuilder();
+		List<Parameter> parameters = new ArrayList<Parameter>();
+		parameterBuilder.name("Authorization").description("令牌").modelRef(new ModelRef("string")).parameterType("header")
+				.required(false).build();
+		parameters.add(parameterBuilder.build());
+		return new Docket(DocumentationType.SWAGGER_2).apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.any())
+				.paths(PathSelectors.any()).build().globalOperationParameters(parameters);
     }
-
-
 
     private ApiInfo apiInfo(){
-        return new ApiInfoBuilder()
-                .title("Spring Boot API Doc")
-                .description("This is a restful api document of Spring Boot.")
-                .version("1.0")
-                .contact(new Contact("ranyk","http://www.ranyk.com","ranyk@foxmain.com"))
-                .build();
+        return new ApiInfoBuilder().build();
     }
-
-
 
 }

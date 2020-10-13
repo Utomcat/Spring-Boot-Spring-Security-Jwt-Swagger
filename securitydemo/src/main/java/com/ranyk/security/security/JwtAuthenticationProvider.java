@@ -9,12 +9,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
- * ClassName:JwtAuthenticationProvider
- * Description:
- *
- * @author ranyi
- * @date 2020-10-11 14:04
- * Version: V1.0
+ * 身份验证提供者
+ * @author Louis
+ * @date Nov 20, 2018
  */
 public class JwtAuthenticationProvider extends DaoAuthenticationProvider {
 
@@ -25,11 +22,15 @@ public class JwtAuthenticationProvider extends DaoAuthenticationProvider {
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        return super.authenticate(authentication);
+    	// 可以在此处覆写整个登录认证逻辑
+    	return super.authenticate(authentication);
     }
-
+    
     @Override
-    protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication) throws AuthenticationException {
-        super.additionalAuthenticationChecks(userDetails, authentication);
-    }
+	protected void additionalAuthenticationChecks(UserDetails userDetails, UsernamePasswordAuthenticationToken authentication)
+			throws AuthenticationException {
+    	// 可以在此处覆写密码验证逻辑
+		super.additionalAuthenticationChecks(userDetails, authentication);
+	}
+
 }

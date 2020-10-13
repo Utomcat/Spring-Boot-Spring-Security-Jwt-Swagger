@@ -1,25 +1,25 @@
 package com.ranyk.security.security;
 
+
+import com.louis.springboot.spring.security.service.UserService;
 import com.ranyk.security.model.User;
-import com.ranyk.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * ClassName:UserDetailsServiceImpl
- * Description:
- *
- * @author ranyi
- * @date 2020-10-13 0:12
- * Version: V1.0
+ * 用户登录认证信息查询
+ * @author Louis
+ * @date Nov 20, 2018
  */
+@Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired

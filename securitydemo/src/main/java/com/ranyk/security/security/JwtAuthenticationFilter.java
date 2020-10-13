@@ -1,4 +1,5 @@
-package com.ranyk.security.config;
+package com.ranyk.security.security;
+
 
 import com.ranyk.security.utils.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,23 +13,22 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * ClassName:JwtAuthenticationFilter
- * Description:
- *
- * @author ranyi
- * @date 2020-10-11 15:03
- * Version: V1.0
+ * 登录认证检查过滤器
+ * @author Louis
+ * @date Nov 20, 2018
  */
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
-
-    @Autowired
+	
+	@Autowired
     public JwtAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws IOException, ServletException {
+    	// 获取token, 并检查登录状态
         SecurityUtils.checkAuthentication(request);
         chain.doFilter(request, response);
     }
+    
 }

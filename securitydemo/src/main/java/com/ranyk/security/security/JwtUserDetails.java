@@ -6,23 +6,21 @@ import org.springframework.security.core.userdetails.User;
 import java.util.Collection;
 
 /**
- * ClassName:JwtUserDetails
- * Description:
- *
- * @author ranyi
- * @date 2020-10-13 0:13
- * Version: V1.0
+ * 安全用户模型
+ * @author Louis
+ * @date Nov 28, 2018
  */
 public class JwtUserDetails extends User {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public JwtUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
-        this(username, password, true, true, true, true, authorities);
-    }
+	public JwtUserDetails(String username, String password, Collection<? extends GrantedAuthority> authorities) {
+		this(username, password, true, true, true, true, authorities);
+	}
+	
+	public JwtUserDetails(String username, String password, boolean enabled, boolean accountNonExpired,
+			boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
+		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
+	}
 
-    public JwtUserDetails(String username, String password, boolean enabled, boolean accountNonExpired,
-                          boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
-        super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-    }
 }
