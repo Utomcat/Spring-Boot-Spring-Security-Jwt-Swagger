@@ -1,4 +1,4 @@
-package com.ranyk.security.config;
+package com.ranyk.security.security;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;

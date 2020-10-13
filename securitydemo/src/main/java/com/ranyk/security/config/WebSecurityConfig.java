@@ -1,5 +1,6 @@
 package com.ranyk.security.config;
 
+import com.ranyk.security.security.JwtAuthenticationProvider;
 import com.ranyk.security.security.JwtLoginFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -45,7 +46,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/v2/**").permitAll()
                 .anyRequest()
-                .authenticated();
+                .authenticated()
+        .and().formLogin().loginProcessingUrl("/login");
 
 
         http.logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
