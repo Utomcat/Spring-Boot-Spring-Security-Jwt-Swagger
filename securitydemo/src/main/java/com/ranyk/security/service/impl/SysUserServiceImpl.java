@@ -1,6 +1,7 @@
 package com.ranyk.security.service.impl;
 
 import com.ranyk.security.model.User;
+import com.ranyk.security.service.UserService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import java.util.Set;
 
 
 @Service
-public class SysUserServiceImpl implements com.louis.springboot.spring.security.service.UserService {
+public class SysUserServiceImpl implements UserService {
 
 	@Override
 	public User findByUsername(String username) {

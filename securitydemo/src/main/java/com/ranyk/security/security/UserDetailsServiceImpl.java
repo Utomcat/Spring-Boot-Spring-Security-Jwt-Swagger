@@ -1,8 +1,8 @@
 package com.ranyk.security.security;
 
 
-import com.louis.springboot.spring.security.service.UserService;
 import com.ranyk.security.model.User;
+import com.ranyk.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
