@@ -1,0 +1,9 @@
+server:
+  port: 8083
+
+spring:
+  thymeleaf:
+    cache: false
+logging:
+  level:
+    com: warn

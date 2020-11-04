@@ -1,0 +1,22 @@
+<!-- 
+@ClassName:index
+@Description:
+@author: ranyi
+@date: 2020-11-04 10:53
+Version: V1.0
+-->
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Hello Spring Security</title>
+        <link rel="stylesheet" href="/css/main.css" th:href="@{/css/main.css}" />
+    </head>
+    <body>
+        <div th:substituteby="index::logout"></div>
+        <h1>This is a secured page!</h1>
+        <p><a href="/index" th:href="@{/index}">Back to home page</a></p>
+    </body>
+</html>
