@@ -60,3 +60,5 @@ hs_err_pid*
 
 /securitydemo/security.iml
 /securitydemo/target/
+/securitydemo2/target/
+/securitydemo3/target/

@@ -1,0 +1,9 @@
+spring:
+  #spring多环境配置
+  profiles:
+    active: dev
+  #springboot 热部署配置
+  devtools:
+    enabled: true
+    additional-paths: src/main/java/com/ranyk
+    exclude: templates
