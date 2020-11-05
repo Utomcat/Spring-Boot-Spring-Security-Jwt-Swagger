@@ -3,13 +3,19 @@ package com.ranyk.security.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
+import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
+import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
+import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ClassName:SwaggerConfig
@@ -32,13 +38,44 @@ public class SwaggerConfig {
     @Bean
     public Docket createRestApi(){
 
-        //创建 Docket 对象返回
-        return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(getApiInfo())
-                .select()
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
+        //创建请求头参数
+        ParameterBuilder parameterBuilder = new ParameterBuilder();
+        List<Parameter> parameters = new ArrayList<>();
+
+        //创建请求头参数
+        parameterBuilder
+                //设置该参数的 name
+                .name("Authorization")
+                //设置该参数是否必填
+                .required(false)
+                //设置该参数的描述
+                .description("令牌")
+                //设置该参数是那种参数
+                .parameterType("header")
+                //设置该参数的数据类型
+                .modelRef(new ModelRef("string"))
+                //构建该参数
                 .build();
+
+        //将创建的参数添加进 List 集合中
+        parameters.add(parameterBuilder.build());
+
+        //创建 Docket 对象返回
+
+        //构造一个 文档类型为 SWAGGER_2 的 Docket 对象
+        return new Docket(DocumentationType.SWAGGER_2)
+                //设置该 Docket 的Api 信息
+                .apiInfo(getApiInfo())
+                //启动 ApiSelectorBuilder
+                .select()
+                //设置 Api
+                .apis(RequestHandlerSelectors.any())
+                //设置 path
+                .paths(PathSelectors.any())
+                //构建 Docket
+                .build()
+                //设置 Docket 的全局操作参数
+                .globalOperationParameters(parameters);
     }
 
 
