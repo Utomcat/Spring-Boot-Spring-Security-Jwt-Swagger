@@ -1,6 +1,8 @@
 package com.ranyk.security.config;
 
 import com.ranyk.security.constant.RequestURL;
+import com.ranyk.security.security.JwtAuthenticationFilter;
+import com.ranyk.security.security.JwtLoginFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -11,6 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 
 /**
@@ -76,7 +79,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated())
                 //禁用 csrf,使用JWT
                 .cors().and().csrf().disable()
-                //在此处对登录认证的过滤器和访问控制是登录检查状态过滤器的添加
+                //在此处对自定义的登录过滤器的添加
+                .addFilterBefore(new JwtLoginFilter(authenticationManager()), UsernamePasswordAuthenticationFilter.class)
+                //在此处对自定义的认证过滤器的添加
+                .addFilterBefore(new JwtAuthenticationFilter(authenticationManager()),UsernamePasswordAuthenticationFilter.class)
                 //退出登录处理器创建,其用来对退出进行处理
                 .logout().logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler());
     }

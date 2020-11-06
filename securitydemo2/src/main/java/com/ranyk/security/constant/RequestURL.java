@@ -1,13 +1,16 @@
 package com.ranyk.security.constant;
 
+import lombok.Getter;
+
 /**
- * ClassName:RequestURL
+ * ClassName:RequestURL<br/>
  * Description:请求URL路径枚举常量
  *
  * @author ranyi
  * @date 2020-11-04 16:55
  * Version: V1.0
  */
+@Getter
 public enum RequestURL {
 
     /**
@@ -47,15 +50,6 @@ public enum RequestURL {
      */
     RequestURL(String url) {
         this.url = url;
-    }
-
-    /**
-     * 获取URL值
-     *
-     * @return 返回该枚举对象的URL值
-     */
-    public String getUrl() {
-        return url;
     }
 
 }

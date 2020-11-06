@@ -2,7 +2,10 @@ package com.ranyk.security.security;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.ranyk.security.utils.HttpUtils;
+import com.ranyk.security.utils.JwtTokenUtils;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.event.InteractiveAuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -96,18 +99,27 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         //用户名去空格
         userName = userName.trim();
 
-        //获得此用户的 token 令牌,默认是通过 UsernamePasswordAuthenticationToken 获得,此处使用 JWT 方式获得
+        //通过用户名和密码生成认证对象
         JwtAuthenticationToken authRequest = new JwtAuthenticationToken(userName,password);
 
-        //将此 token 令牌设置此用户详情属性,可理解为将用户详细信息放到 token 中
+        //设置认证对象的详细信息,请求,请求认证对象
         setDetails(request,authRequest);
 
-        //返回验证当前的 token 令牌的结果,确定账户是否有异常状态,即禁用、锁定、身份验证被拒绝
+        //验证登录用户,并返回认证对象,同时确定账户是否有异常状态,即禁用、锁定、身份验证被拒绝,有则抛出对应异常
         return this.getAuthenticationManager().authenticate(authRequest);
     }
 
 
-
+    /**
+     * 认证成功后调用的方法,用于将此用户认证成功后生成的 token 令牌返回,并在之后的请求中携带此令牌
+     *
+     * @param request HttpServletRequest 请求对象
+     * @param response HttpServletResponse 响应对象
+     * @param chain 拦截器对象
+     * @param authResult Authentication 授权认证对象
+     * @throws IOException IO异常
+     * @throws ServletException Servlet异常
+     */
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
 
@@ -117,7 +129,16 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         //记住我服务
         getRememberMeServices().loginSuccess(request,response,authResult);
 
-        super.successfulAuthentication(request, response, chain, authResult);
+        //发布监听事件,监听认证成功的事件
+        if(null != eventPublisher) {
+            eventPublisher.publishEvent(new InteractiveAuthenticationSuccessEvent(authResult,this.getClass()));
+        }
+
+        //生成 token 令牌
+        JwtAuthenticationToken token = new JwtAuthenticationToken(null, null, JwtTokenUtils.generateToken(authResult));
+
+        //将token令牌写进响应对象,返回给客户端,让其后续访问中都携带此 token 令牌访问
+        HttpUtils.write(response,token);
     }
 
     /**
