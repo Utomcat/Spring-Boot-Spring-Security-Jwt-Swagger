@@ -14,29 +14,29 @@ import lombok.Getter;
 public enum RequestURL {
 
     /**
-     * 所有请求
+     * 所有请求 /**
      */
     ALL_REQUEST("/**"),
     /**
-     * 登录请求
+     * 登录请求 /login
      */
     LOGIN("/login"),
     /**
-     * swagger页面请求
+     * swagger页面请求  /swagger-ui.html
      */
     SWAGGER_HTML("/swagger-ui.html"),
     /**
-     * swagger资源请求
+     * swagger资源请求 /swagger-resources/**
      */
-    SWAGGER_RESOURCES("/swagger-resources"),
+    SWAGGER_RESOURCES("/swagger-resources/**"),
     /**
-     * swagger文档请求
+     * swagger文档请求 /v2/api-docs"
      */
     V2_API_DOCS("/v2/api-docs"),
     /**
-     * swagger UI请求
+     * swagger UI请求 /webjars ** **
      */
-    WEBJARS("/webjars/springfox-swagger-ui/**");
+    WEBJARS("/webjars/**/**");
 
     /**
      * 请求变量

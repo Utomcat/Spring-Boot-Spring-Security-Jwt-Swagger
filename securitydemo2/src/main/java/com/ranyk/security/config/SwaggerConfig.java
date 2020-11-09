@@ -8,7 +8,6 @@ import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.schema.ModelRef;
 import springfox.documentation.service.ApiInfo;
-import springfox.documentation.service.Contact;
 import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
@@ -91,15 +90,15 @@ public class SwaggerConfig {
                 //更新API描述
                 .description("Swagger Api 描述")
                 //更新网址服务条款
-                .termsOfServiceUrl("www.baidu.com")
+                //.termsOfServiceUrl("www.baidu.com")
                 //更新API版本
                 .version("V1.0 版本")
                 //更新负责该API的联系人信息
-                .contact(new Contact("ranyk","www.baidu.com","1390851149@qq.com"))
+                //.contact(new Contact("ranyk","www.baidu.com","1390851149@qq.com"))
                 //更新API许可证信息
-                .license("许可证信息")
+                //.license("许可证信息")
                 //更新API许可网址
-                .licenseUrl("许可网址")
+                //.licenseUrl("许可网址")
                 //创建一个ApiInfo对象(通过调用 apiInfoBuilder.build()方法)
                 .build();
     }

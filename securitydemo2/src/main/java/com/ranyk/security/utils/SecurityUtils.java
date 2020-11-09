@@ -1,9 +1,12 @@
 package com.ranyk.security.utils;
 
+import com.ranyk.security.security.JwtAuthenticationToken;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -80,5 +83,28 @@ public class SecurityUtils {
         Authentication authentication = JwtTokenUtils.getAuthenticationFromToken(request);
         //设置 Context 对象中 authentication 属性值
         SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    /**
+     * 自定义的登录方法
+     * @param request 登录 HttpServletRequest 对象
+     * @param userName 登录用户名
+     * @param password 登录密码
+     * @param authenticationManager
+     * @return 返回登录成功后的 JwtAuthenticationToken 对象
+     */
+    public static JwtAuthenticationToken login(HttpServletRequest request, String userName, String password, AuthenticationManager authenticationManager) {
+
+        JwtAuthenticationToken token = new JwtAuthenticationToken(userName, password);
+
+        token.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+        Authentication authenticate = authenticationManager.authenticate(token);
+
+        SecurityContextHolder.getContext().setAuthentication(authenticate);
+
+        token.setToken(JwtTokenUtils.generateToken(authenticate));
+
+        return token;
     }
 }

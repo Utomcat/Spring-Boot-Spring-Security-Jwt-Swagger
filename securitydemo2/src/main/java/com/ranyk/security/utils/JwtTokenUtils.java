@@ -102,25 +102,35 @@ public class JwtTokenUtils implements Serializable {
         //从 request 中获取 token 令牌
         String token = JwtTokenUtils.getToken(request);
 
+        //判断获得的 token 令牌是否为空
         if (!StringUtils.isEmpty(token)) {
 
+            //获取 SecurityContextHolder 中的 Context 中的 Authentication 对象,判断是否存在(确认是否已经认证成功)
             if (null == SecurityUtils.getAuthentication()) {
+                //还未认证,则先认证,再获取 Authentication 对象
+
+                //从 token 中获取 Claims 对象
                 Claims claims = getClaimsFromToken(token);
 
+                //判断 claims 是否为空,为空则直接返回
                 if (null == claims) {
                     return null;
                 }
 
+                //从 Claims 对象中获取 用户名
                 String userName = claims.getSubject();
 
+                //判断用户名是否为空,为空则直接返回
                 if (null == userName) {
                     return null;
                 }
 
+                //验证 token 是否有效
                 if (isTokenExpired(token)) {
                     return null;
                 }
 
+                //从 Claims 对象中获取权限列表
                 Object authors = claims.get(AUTHORITIES);
                 List<GrantedAuthority> authorities = new ArrayList<>();
                 if (authors instanceof List) {
@@ -129,16 +139,21 @@ public class JwtTokenUtils implements Serializable {
                     }
                 }
 
+                //通过 Jwt 进行认证 token 令牌,同时生成 Authentication 对象
                 authentication = new JwtAuthenticationToken(userName,null,authorities,token);
 
             } else {
+                //已经认证,则校验认证对象中的token是否有效,同时判断登录的用户名和token中存放的用户名是否一致
                 if (validateToken(token,SecurityUtils.getUserName())) {
+
+                    //token有效且是同一用户则获取该 认证对象
                     authentication = SecurityUtils.getAuthentication();
                 }
             }
 
         }
 
+        //返回获得的 Authentication 对象,当token认证失效或认证失败,此处返回的是 null
         return authentication;
 
 

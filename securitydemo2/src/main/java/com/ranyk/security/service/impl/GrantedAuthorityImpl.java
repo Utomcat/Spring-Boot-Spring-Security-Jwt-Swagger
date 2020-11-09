@@ -1,6 +1,6 @@
 package com.ranyk.security.service.impl;
 
-import lombok.Data;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 /**
@@ -11,7 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
  * @date 2020-11-06 16:07
  * Version: V1.0
  */
-@Data
+@Setter
 public class GrantedAuthorityImpl implements GrantedAuthority {
 
 
@@ -26,6 +26,6 @@ public class GrantedAuthorityImpl implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return null;
+        return this.authority;
     }
 }
